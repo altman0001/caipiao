@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+caipiao.db
+
+# Node
+webapp/node_modules/
+webapp/dist/
+webapp/package-lock.json.tmp
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
