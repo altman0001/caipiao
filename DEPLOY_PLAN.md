@@ -7,6 +7,13 @@
 - 已通过 GitHub 连接器授权（如未授权：调用 `RequestAuthorization`，service=`trae-remote-official:github::github`）。
 - 用户已确认：仓库与网址**全部公开**，需保留每日自动刷新入口。
 
+## 状态（2026-09-14 更新）
+- [x] 本地 git 已初始化（`main` 分支），初始提交 `08ee5c5` 已创建（24 文件）。
+- [ ] 创建公开仓库 `caipiao` 并推送 `main`。
+- [ ] 触发首次 Actions 构建（推送后自动发布到 `gh-pages`）。
+- [ ] 启用 GitHub Pages（Source = gh-pages / root）。
+- [ ] 验证在线访问 + 把 README 占位链接替换为真实 URL。
+
 ## 步骤
 
 1. 确认工作目录 `d:\DEV\caipiao` 是非 git 仓库（`Get-ChildItem -Force` 无 `.git`），若有则跳过 init。
