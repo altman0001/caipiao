@@ -9,10 +9,11 @@
 
 ## 状态（2026-09-14 更新）
 - [x] 本地 git 已初始化（`main` 分支），初始提交 `08ee5c5` 已创建（24 文件）。
-- [ ] 创建公开仓库 `caipiao` 并推送 `main`。
-- [ ] 触发首次 Actions 构建（推送后自动发布到 `gh-pages`）。
-- [ ] 启用 GitHub Pages（Source = gh-pages / root）。
-- [ ] 验证在线访问 + 把 README 占位链接替换为真实 URL。
+- [x] 已创建公开仓库 `altman0001/caipiao` 并推送 `main`。
+- [x] 首次 Actions 构建成功（run 34853718869, conclusion=success），已发布到 `gh-pages`。
+- [x] 已启用 GitHub Pages（Source = gh-pages / root）。
+- [x] 在线验证通过：<https://altman0001.github.io/caipiao/>（标题与资源均正常）。
+- [x] README 占位链接已替换为真实 URL。
 
 ## 步骤
 

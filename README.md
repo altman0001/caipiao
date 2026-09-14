@@ -4,7 +4,7 @@
 
 - **数据**：双色球（2003 至今）、大乐透（2007 至今），来自 `datachart.500.com`，存入 `caipiao.db`（SQLite）。
 - **前端**：React + Vite，纯静态，目录 `webapp/`，构建产物 `webapp/dist/`。
-- **在线访问**：<https://你的用户名.github.io/caipiao/>（发布后替换为真实地址）
+- **在线访问**：<https://altman0001.github.io/caipiao/>
 
 > ⚠️ 体彩 / 福彩开奖为随机独立事件，本页依据历史数据做统计学分析，**不构成中奖保证，更不构成投注建议**。请理性看待、量力而行。
 
