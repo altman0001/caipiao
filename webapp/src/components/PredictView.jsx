@@ -98,7 +98,7 @@ export default function PredictView({ game, win }) {
             <div className="sec-head">
               <h3>号码 {pad(sel)} 的判定</h3>
               <span className="badge" style={{background:'var(--brand)',color:'#fff',border:0}}>排除置信 {selRec.score}</span>
-              {candSet.has(sel) && <span className="badge" style={{background:'rgba(55,224,193,.2)',color:'#37e0c0'}}>预测可能开出</span>}
+              {candSet.has(sel) && <span className="badge" style={{background:'var(--teal-soft)',color:'var(--teal-text)'}}>预测可能开出</span>}
             </div>
             <div className="chips" style={{marginTop:10}}>
               {selRec.reasons.map(r=> <span key={r.k} className="chip" style={{fontSize:11}}>{r.label}</span>)}
@@ -127,7 +127,7 @@ export default function PredictView({ game, win }) {
           {p.extraNot.map(it=> {
             const isCand = extraCand.has(it.n);
             return (
-              <div key={it.n} className="cell" onClick={()=>setSel(it.n)} style={{background:isCand?'var(--surface3)':'var(--bg2)', color:isCand?'#4dabff':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px #4dabff':'none', cursor:'pointer'}}>
+              <div key={it.n} className="cell" onClick={()=>setSel(it.n)} style={{background:isCand?'var(--surface3)':'var(--bg2)', color:isCand?'var(--blue-text)':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px var(--blue-strong)':'none', cursor:'pointer'}}>
                 <span>{pad(it.n)}</span><small>{isCand?'保留':'排除'}</small>
               </div>
             );

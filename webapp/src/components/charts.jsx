@@ -60,7 +60,7 @@ export function OmahaGrid({ R, om, omHist, label='遗漏' }) {
           <div key={n} className="cell"
             title={`号码 ${n}：已遗漏 ${o} 期，历史均遗漏 ${avg} 期，最大遗漏 ${omHist[n].max} 期`}
             style={{background: t>0.05 ? (overdue ? lerpColor('160,22,40',HOT,t*1.2)+'aa' : color01(t)+'22') : 'var(--surface3)',
-                    color: t>0.05 ? (overdue? '#ffb3c0':'inherit') : 'var(--faint)'}}>
+                    color: t>0.05 ? (overdue? 'var(--overdue)':'inherit') : 'var(--faint)'}}>
             <span>{pad(n)}</span>
             <small>{o}</small>
           </div>
