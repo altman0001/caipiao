@@ -1,8 +1,15 @@
-import { useState, Component } from 'react';
+import { useState, useEffect, Component } from 'react';
 import { DATA, META } from './data.js';
 import QueryView from './components/QueryView.jsx';
 import AnalysisView from './components/AnalysisView.jsx';
 import PredictView from './components/PredictView.jsx';
+
+const THEME_KEY = 'theme';
+
+function getInitialTheme(){
+  try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark'; }
+  catch(e){ return 'dark'; }
+}
 
 class Boundary extends Component {
   constructor(p){ super(p); this.state={err:null}; }
@@ -29,10 +36,18 @@ const WINS = [['all','全部'],['30','近30期'],['50','近50期'],['100','近10
 
 export default function App() {
   const [gameKey, setGameKey] = useState('ssq');
-  const [tab, setTab] = useState('analyse');
+  const [tab, setTab] = useState('query');
   const [win, setWin] = useState('all');
+  const [theme, setTheme] = useState(getInitialTheme);
   const game = GAMES[gameKey];
   const winNum = win==='all' ? game.draws.length : parseInt(win,10);
+
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-theme', theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch(e){}
+  },[theme]);
+
+  const toggleTheme = ()=> setTheme(t=> t==='dark' ? 'light' : 'dark');
 
   return (
     <div className="app">
@@ -53,6 +68,9 @@ export default function App() {
           <button className={gameKey==='ssq'?'on':''} onClick={()=>setGameKey('ssq')}>双色球</button>
           <button className={gameKey==='dlt'?'on':''} onClick={()=>setGameKey('dlt')}>大乐透</button>
         </div>
+        <button className="theme-btn" onClick={toggleTheme} title={theme==='dark'?'切换到明亮主题':'切换到暗色主题'} aria-label="切换主题">
+          <span className="tdot"/>{theme==='dark' ? '明亮' : '暗色'}
+        </button>
         <div className="meta">数据源 <b>datachart.500.com</b><br/>
           双色球 <b>{META.ssq_total}</b> 期 · 大乐透 <b>{META.dlt_total}</b> 期 · {META.build_date}</div>
       </header>
