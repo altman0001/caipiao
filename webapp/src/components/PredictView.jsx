@@ -9,6 +9,7 @@ export default function PredictView({ game, win }) {
   const p = useMemo(()=>predict(game, win), [game, win]);
   const [excludeRatio, setExcludeRatio] = useState(0.72);
   const [sel, setSel] = useState(null); // 选中号码看理由
+  const [tip, setTip] = useState(null); // 悬停浮层 {x,y,above,it}
   const tag = game.tag;
 
   const mainExclCount = Math.round(game.mainRange * excludeRatio);
@@ -19,6 +20,13 @@ export default function PredictView({ game, win }) {
   const mainCls = (n)=> tag==='dlt' ? 'orange' : 'red';
 
   const selRec = sel && p.mainNot.concat(p.extraNot).find(x=>x.n===sel);
+
+  const showTip = (e, it) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(r.left + r.width/2, 96), window.innerWidth - 96);
+    const above = r.top > 240;
+    setTip({ x, y: above ? r.top - 10 : r.bottom + 10, above, it });
+  };
 
   return (
     <>
@@ -78,16 +86,17 @@ export default function PredictView({ game, win }) {
             const excluded = i < mainExclCount;
             return (
               <div key={it.n} className="cell" onClick={()=>setSel(it.n)}
+                onMouseEnter={e=>showTip(e,it)} onMouseLeave={()=>setTip(null)}
                 style={{background: isCand ? 'var(--surface3)' : lerpColor(GR2,RD2,it.score/100)+(excluded?'':'22'),
-                        color: isCand ? '#37e0c0' : (excluded?'#fff':'inherit'),
-                        boxShadow: isCand? 'inset 0 0 0 2px #37e0c0':'none',
+                        color: isCand ? 'var(--teal-text)' : (excluded?'#fff':'inherit'),
+                        boxShadow: isCand? 'inset 0 0 0 2px var(--teal-text)':'none',
                         cursor:'pointer'}}>
                 <span>{pad(it.n)}</span><small>{excluded? '排除':'保留'}</small>
               </div>
             );
           })}
         </div>
-        <div className="big-hint" style={{marginTop:12}}>点击任一号码查看其打分理由（如下方）。绿色描边 = 预测较可能开出。</div>
+        <div className="big-hint" style={{marginTop:12}}>悬停任一号码查看其排除置信分与判定理由；点击可固定在下方查看。绿色描边 = 预测较可能开出。</div>
       </div>
 
       {/* 打分明细与理由 */}
@@ -127,13 +136,29 @@ export default function PredictView({ game, win }) {
           {p.extraNot.map(it=> {
             const isCand = extraCand.has(it.n);
             return (
-              <div key={it.n} className="cell" onClick={()=>setSel(it.n)} style={{background:isCand?'var(--surface3)':'var(--bg2)', color:isCand?'var(--blue-text)':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px var(--blue-strong)':'none', cursor:'pointer'}}>
+              <div key={it.n} className="cell" onClick={()=>setSel(it.n)}
+                onMouseEnter={e=>showTip(e,it)} onMouseLeave={()=>setTip(null)}
+                style={{background:isCand?'var(--surface3)':'var(--bg2)', color:isCand?'var(--blue-text)':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px var(--blue-strong)':'none', cursor:'pointer'}}>
                 <span>{pad(it.n)}</span><small>{isCand?'保留':'排除'}</small>
               </div>
             );
           })}
         </div>
       </div>
+
+      {tip && (
+        <div className={'tip'+(tip.above?' up':'')} style={{left:tip.x, top:tip.y}}>
+          <div className="tip-head">号码 {pad(tip.it.n)} · 排除置信 <b style={{color:scoreColor(tip.it.score)}}>{tip.it.score}</b></div>
+          <div className="tip-reasons">
+            {tip.it.reasons.map(r=>(
+              <div key={r.k} className="tip-row">
+                <span>{r.label}</span>
+                <small>权重 {Math.round(r.w*100)}%</small>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="disclaimer" style={{marginTop:4}}>
         <b>重要提示：</b>体彩/福彩开奖均为随机独立事件，历史数据不构成对未来结果的确定性依据。本页"排除打分"仅是统计学上对"较不容易开出"的相对排序，用于研究开奖数据的分布规律，不能保证命中，亦不构成任何投注建议。请理性看待、量力而行。
