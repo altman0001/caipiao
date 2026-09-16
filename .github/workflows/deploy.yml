@@ -39,6 +39,22 @@ jobs:
           python export.py
         shell: bash
 
+      - name: Regenerate predictions & evaluate hits
+        run: node scripts/update_predictions.mjs
+        shell: bash
+
+      - name: Commit prediction history to main
+        run: |
+          git add predictions/ssq.json predictions/dlt.json
+          if git diff --cached --quiet; then
+            echo "::notice::prediction history unchanged"
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "chore(data): 更新预测历史与命中判定"
+            git push origin HEAD:main
+            echo "::notice::prediction history committed and pushed"
+          fi
+        shell: bash
+
       - name: Build frontend
         working-directory: webapp
         run: |

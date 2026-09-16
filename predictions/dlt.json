@@ -1,0 +1,25 @@
+{
+  "records": [
+    {
+      "issue": "26105",
+      "generated": "2026-09-16",
+      "nDraws": 2922,
+      "keptMain": [
+        30,
+        23,
+        20,
+        13,
+        32
+      ],
+      "keptExtra": [
+        10,
+        12
+      ],
+      "actualMain": null,
+      "actualExtra": null,
+      "hitMain": null,
+      "hitExtra": null,
+      "status": "pending"
+    }
+  ]
+}

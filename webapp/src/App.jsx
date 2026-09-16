@@ -3,6 +3,7 @@ import { DATA, META } from './data.js';
 import QueryView from './components/QueryView.jsx';
 import AnalysisView from './components/AnalysisView.jsx';
 import PredictView from './components/PredictView.jsx';
+import PredHistoryView from './components/PredHistoryView.jsx';
 
 const THEME_KEY = 'theme';
 
@@ -31,6 +32,7 @@ const TABS = [
   ['query','查询'],
   ['analysis','分析'],
   ['predict','预测'],
+  ['pred','预测结果'],
 ];
 const WINS = [['all','全部'],['30','近30期'],['50','近50期'],['100','近100期'],['200','近200期'],['500','近500期']];
 
@@ -89,6 +91,7 @@ export default function App() {
         {tab==='query' && <Boundary><QueryView game={game}/></Boundary>}
         {tab==='analysis' && <Boundary key={gameKey+win}><AnalysisView game={game} win={winNum}/></Boundary>}
         {tab==='predict' && <Boundary key={gameKey+win}><PredictView game={game} win={winNum}/></Boundary>}
+        {tab==='pred' && <Boundary key={gameKey}><PredHistoryView game={game}/></Boundary>}
       </main>
     </div>
   );
