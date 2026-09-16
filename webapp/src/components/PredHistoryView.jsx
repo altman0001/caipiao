@@ -10,6 +10,7 @@ export default function PredHistoryView({ game }) {
   const [filter, setFilter] = useState('all');
   const [limit, setLimit] = useState(20);
   const records = useMemo(() => (PRED_HISTORY[tag] || []).slice().reverse(), [tag]);
+  const drawByIssue = useMemo(() => new Map(game.draws.map(d => [d.i, d.d])), [game]);
 
   const stats = useMemo(() => {
     const done = records.filter(r=>r.status!=='pending');
@@ -97,7 +98,7 @@ export default function PredHistoryView({ game }) {
           <div className="tablewrap">
             <table className="lt">
               <thead><tr>
-                <th>期号</th><th>生成日期</th>
+                <th>期号</th><th>开奖日期</th>
                 <th>保留主号</th><th>保留{tag==='dlt'?'后区':'蓝球'}</th>
                 <th>实际主号</th><th>实际{tag==='dlt'?'后区':'蓝球'}</th>
                 <th>命中主/后</th><th>判定</th>
@@ -106,7 +107,7 @@ export default function PredHistoryView({ game }) {
                 {view.map(r=>(
                   <tr key={r.issue}>
                     <td className="issue">{r.issue}</td>
-                    <td className="date">{r.generated}</td>
+                    <td className="date">{drawByIssue.get(r.issue) || <span className="dim">—</span>}</td>
                     <td><span className="sum-cell"><Mains v={r.keptMain}/></span></td>
                     <td><span className="sum-cell"><Extras v={r.keptExtra}/></span></td>
                     <td><span className="sum-cell"><Mains v={r.actualMain}/></span></td>
