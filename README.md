@@ -30,7 +30,7 @@ npm run build && npm run preview   # 预览生产构建
 
 仓库内置 GitHub Actions 工作流 `.github/workflows/deploy.yml`：
 
-- **触发**：push 到 `main`、或 **每天 02:20 / 14:30 (UTC) 定时（北京时间 10:20 / 22:30）**、或手动 `workflow_dispatch`。
+- **触发**：push 到 `main`、或 **每天 04:30 / 14:30 / 22:30 (UTC) 定时（北京时间 12:30 / 22:30 / 次日 06:30）**、或手动 `workflow_dispatch`。
 - **流程**：抓取最新开奖 → 重建 `caipiao.db` → 导出 `webapp/src/data.js` → `npm run build` → 发布 `webapp/dist` 到 `gh-pages` 分支。
 - **手动刷新**：本地执行 `python build_db.py && python export.py`，再 `cd webapp && npm run build`，提交后 push 即可。
 
