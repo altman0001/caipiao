@@ -9,6 +9,11 @@ webapp/dist/
 webapp/package-lock.json.tmp
 webapp/src/predHistory.js
 
+# H5 (UniApp)
+h5/node_modules/
+h5/dist/
+h5/src/common/predHistory.js
+
 # OS / editor
 Thumbs.db
 .DS_Store

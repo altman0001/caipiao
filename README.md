@@ -3,8 +3,9 @@
 基于公开历史开奖数据的查询、多维分析与"下期不易开出号码"排除打分工具。
 
 - **数据**：双色球（2003 至今）、大乐透（2007 至今），来自 `datachart.500.com`，存入 `caipiao.db`（SQLite）。
-- **前端**：React + Vite，纯静态，目录 `webapp/`，构建产物 `webapp/dist/`。
-- **在线访问**：<https://altman0001.github.io/caipiao/>
+- **前端（PC）**：React + Vite，纯静态，目录 `webapp/`，构建产物 `webapp/dist/`。
+- **前端（手机 H5）**：UniApp（Vue3 + uni-ui），目录 `h5/`，构建产物 `h5/dist/build/h5/`。
+- **在线访问**：PC 版 <https://altman0001.github.io/caipiao/pc> · 手机 H5 版 <https://altman0001.github.io/caipiao/h5> · 落地页 <https://altman0001.github.io/caipiao/>
 
 > ⚠️ 体彩 / 福彩开奖为随机独立事件，本页依据历史数据做统计学分析，**不构成中奖保证，更不构成投注建议**。请理性看待、量力而行。
 
@@ -26,13 +27,26 @@ npm run dev          # 开发模式，浏览器打开 Vite 给出的地址
 npm run build && npm run preview   # 预览生产构建
 ```
 
+## 手机 H5 版（UniApp）
+
+功能与 PC 版同步（查询 / 分析 / 预测 / 预测结果），页面适配手机，使用 UniApp + uni-ui 开发，可用 HBuilderX 直接打开 `h5/` 目录运行，或命令行开发：
+
+```bash
+cd h5
+npm install
+npm run dev:h5       # 浏览器调试（默认 http://localhost:5174）
+npm run build:h5     # 产物输出到 h5/dist/build/h5/
+```
+
+> 数据获取与 PC 版同源：`export.py` 同时导出 `webapp/src/data.js` 与 `h5/src/common/data.js`；`scripts/update_predictions.mjs` 同时回写两者的预测历史。
+
 ## 数据刷新与发布（自动）
 
 仓库内置 GitHub Actions 工作流 `.github/workflows/deploy.yml`：
 
 - **触发**：push 到 `main`、或 **每天 04:30 / 14:30 / 22:30 (UTC) 定时（北京时间 12:30 / 22:30 / 次日 06:30）**、或手动 `workflow_dispatch`。
-- **流程**：抓取最新开奖 → 重建 `caipiao.db` → 导出 `webapp/src/data.js` → `npm run build` → 发布 `webapp/dist` 到 `gh-pages` 分支。
-- **手动刷新**：本地执行 `python build_db.py && python export.py`，再 `cd webapp && npm run build`，提交后 push 即可。
+- **流程**：抓取最新开奖 → 重建 `caipiao.db` → 导出两份 `data.js`（PC/H5）→ 构建 PC（React）与 H5（UniApp）→ 发布 `pc/`、`h5/` 与落地页 `index.html` 到 `gh-pages` 分支。
+- **手动刷新**：本地执行 `python build_db.py && python export.py`，再分别 `cd webapp && npm run build`、`cd h5 && npm run build:h5`，提交后 push 即可。
 
 ## 本地脚本
 
@@ -50,5 +64,6 @@ caipiao/
 ├── .github/workflows/deploy.yml   # 每日自动刷新 + 发布 GitHub Pages
 ├── build_db.py / scrape.py / export.py / verify.py
 ├── caipiao.db                     # SQLite 数据
-└── webapp/                        # React + Vite 前端
+├── webapp/                        # React + Vite 前端（PC）
+└── h5/                            # UniApp + uni-ui 前端（手机 H5）
 ```

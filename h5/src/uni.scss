@@ -1,0 +1,23 @@
+/* 彩研 · uni.scss —— 全局编译期变量（运行时主题由 App.vue 中的 CSS 变量控制） */
+$uni-color-primary: #ff6b81;
+$uni-color-success: #34d081;
+$uni-color-warning: #ffab2e;
+$uni-color-error: #ff4d6d;
+
+$uni-color-title: #e8eefb;
+$uni-color-paragraph: #93a0bf;
+
+$uni-border-color: rgba(148, 163, 190, 0.15);
+$uni-bg-color: #0b0f1c;
+$uni-bg-color-grey: #141b30;
+
+$uni-text-color: #e8eefb;
+$uni-text-color-grey: #93a0bf;
+$uni-text-color-placeholder: #5d6a8c;
+
+$uni-border-radius: 14px;
+$uni-border-radius-sm: 9px;
+
+$uni-font-size-sm: 24rpx;
+$uni-font-size-base: 28rpx;
+$uni-font-size-lg: 32rpx;

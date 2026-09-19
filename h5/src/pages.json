@@ -1,0 +1,46 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/query/query",
+      "style": { "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/analysis/analysis",
+      "style": { "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/predict/predict",
+      "style": { "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/history/history",
+      "style": { "navigationStyle": "custom" }
+    }
+  ],
+  "tabBar": {
+    "color": "#7a87ab",
+    "selectedColor": "#ff6b81",
+    "backgroundColor": "#0f1526",
+    "borderStyle": "black",
+    "fontSize": "12px",
+    "height": "54px",
+    "list": [
+      { "pagePath": "pages/query/query", "text": "查询" },
+      { "pagePath": "pages/analysis/analysis", "text": "分析" },
+      { "pagePath": "pages/predict/predict", "text": "预测" },
+      { "pagePath": "pages/history/history", "text": "预测结果" }
+    ]
+  },
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#0b0f1c",
+    "backgroundColorTop": "#0b0f1c",
+    "backgroundColorBottom": "#0b0f1c"
+  }
+}

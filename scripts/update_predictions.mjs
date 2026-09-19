@@ -9,7 +9,10 @@ import { predict } from '../webapp/src/lib/predict.js';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
 const PRED_DIR = path.join(ROOT, 'predictions');
-const OUT_JS = path.join(ROOT, 'webapp', 'src', 'predHistory.js');
+const OUT_JS_LIST = [
+  path.join(ROOT, 'webapp', 'src', 'predHistory.js'),
+  path.join(ROOT, 'h5', 'src', 'common', 'predHistory.js'),
+];
 
 const pad5 = (n) => String(n).padStart(5, '0');
 
@@ -78,5 +81,7 @@ function processGame(key) {
 
 fs.mkdirSync(PRED_DIR, { recursive: true });
 const out = { ssq: processGame('ssq'), dlt: processGame('dlt') };
-fs.writeFileSync(OUT_JS, 'export const PRED_HISTORY = ' + JSON.stringify(out) + ';\n');
-console.log('wrote', OUT_JS);
+for (const f of OUT_JS_LIST) {
+  fs.writeFileSync(f, 'export const PRED_HISTORY = ' + JSON.stringify(out) + ';\n');
+  console.log('wrote', f);
+}

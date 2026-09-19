@@ -1,7 +1,7 @@
 import sqlite3, json, os
 
 DB="caipiao.db"
-OUT="webapp/src/data.js"
+OUTS=["webapp/src/data.js","h5/src/common/data.js"]
 
 con=sqlite3.connect(DB)
 con.row_factory=sqlite3.Row
@@ -38,8 +38,11 @@ for r in con.execute("SELECT * FROM dlt_draws ORDER BY date ASC, issue ASC"):
 meta={"sources":"datachart.500.com","build_date":"2026-09-14",
       "ssq_total":len(ssq["draws"]),"dlt_total":len(dlt["draws"])}
 
-os.makedirs(os.path.dirname(OUT), exist_ok=True)
-with open(OUT,"w",encoding="utf-8") as f:
-    f.write("export const META = "+json.dumps(meta,ensure_ascii=False)+";\n")
-    f.write("export const DATA = { ssq: "+json.dumps(ssq,ensure_ascii=False)+", dlt: "+json.dumps(dlt,ensure_ascii=False)+" };\n")
-print("wrote", OUT, "ssq", len(ssq["draws"]), "dlt", len(dlt["draws"]), "size", os.path.getsize(OUT)//1024, "KB")
+payload = ("export const META = "+json.dumps(meta,ensure_ascii=False)+";\n"
+           "export const DATA = { ssq: "+json.dumps(ssq,ensure_ascii=False)+", dlt: "+json.dumps(dlt,ensure_ascii=False)+" };\n")
+
+for OUT in OUTS:
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    with open(OUT,"w",encoding="utf-8") as f:
+        f.write(payload)
+    print("wrote", OUT, "ssq", len(ssq["draws"]), "dlt", len(dlt["draws"]), "size", os.path.getsize(OUT)//1024, "KB")
