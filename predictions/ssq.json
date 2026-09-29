@@ -211,6 +211,37 @@
       "keptExtra": [
         10
       ],
+      "actualMain": [
+        3,
+        4,
+        20,
+        24,
+        29,
+        30
+      ],
+      "actualExtra": [
+        11
+      ],
+      "hitMain": [],
+      "hitExtra": [],
+      "status": "miss",
+      "evaluated": "2026-09-29"
+    },
+    {
+      "issue": "26114",
+      "generated": "2026-09-29",
+      "nDraws": 3510,
+      "keptMain": [
+        18,
+        27,
+        21,
+        19,
+        22,
+        31
+      ],
+      "keptExtra": [
+        11
+      ],
       "actualMain": null,
       "actualExtra": null,
       "hitMain": null,
