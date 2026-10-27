@@ -38,6 +38,10 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Test prediction history
+        run: node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test scripts/prediction_history.test.mjs
+        shell: bash
+
       - name: Fetch & rebuild dataset (SQLite -> webapp/src/data.js + h5/src/common/data.js)
         run: |
           python build_db.py

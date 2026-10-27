@@ -135,3 +135,95 @@ export function computeAnalysis(game, win) {
   };
 }
 function entries(o) { return Object.entries(o).map(([k, v]) => ({ k, v })).sort((a, b) => Number(a.k) - Number(b.k)) }
+
+export function complementNumbers(range, kept) {
+  const keptSet = new Set(kept);
+  const out = [];
+  for (let n = 1; n <= range; n++) if (!keptSet.has(n)) out.push(n);
+  return out;
+}
+
+export function evaluateExclusion(rec, draw) {
+  const actualMain = new Set(draw.m);
+  const actualExtra = new Set(draw.x);
+  const falseExcludedMain = rec.excludedMain.filter(n => actualMain.has(n));
+  const falseExcludedExtra = rec.excludedExtra.filter(n => actualExtra.has(n));
+  const mainZeroFalseExclusion = falseExcludedMain.length === 0;
+  const extraZeroFalseExclusion = falseExcludedExtra.length === 0;
+  return {
+    falseExcludedMain,
+    falseExcludedExtra,
+    mainZeroFalseExclusion,
+    extraZeroFalseExclusion,
+    zeroFalseExclusion: mainZeroFalseExclusion && extraZeroFalseExclusion,
+  };
+}
+
+function randomZeroFalseProbability(range, count, excluded) {
+  if (excluded > range - count) return 0;
+  let probability = 1;
+  for (let i = 0; i < count; i++) probability *= (range - excluded - i) / (range - i);
+  return probability;
+}
+
+export function summarizePredictionRecords(records, game) {
+  const done = records.filter(r => r.status === 'evaluated');
+  const main = { excluded: 0, false: 0, correct: 0, zero: 0 };
+  const extra = { excluded: 0, false: 0, correct: 0, zero: 0 };
+  const overall = { excluded: 0, false: 0, correct: 0, zero: 0 };
+  const dist = new Map();
+  let mainBaselineZero = 0, extraBaselineZero = 0, overallBaselineZero = 0;
+
+  for (const r of done) {
+    const mainExcluded = r.excludedMain.length;
+    const extraExcluded = r.excludedExtra.length;
+    const mainFalse = r.falseExcludedMain.length;
+    const extraFalse = r.falseExcludedExtra.length;
+    main.excluded += mainExcluded;
+    main.false += mainFalse;
+    extra.excluded += extraExcluded;
+    extra.false += extraFalse;
+    if (mainFalse === 0) main.zero++;
+    if (extraFalse === 0) extra.zero++;
+    if (mainFalse + extraFalse === 0) overall.zero++;
+    dist.set(mainFalse + extraFalse, (dist.get(mainFalse + extraFalse) || 0) + 1);
+
+    const mainProbability = randomZeroFalseProbability(game.mainRange, game.mainCount, mainExcluded);
+    const extraProbability = randomZeroFalseProbability(game.extraRange, game.extraCount, extraExcluded);
+    mainBaselineZero += mainProbability;
+    extraBaselineZero += extraProbability;
+    overallBaselineZero += mainProbability * extraProbability;
+  }
+
+  overall.excluded = main.excluded + extra.excluded;
+  overall.false = main.false + extra.false;
+  main.correct = main.excluded - main.false;
+  extra.correct = extra.excluded - extra.false;
+  overall.correct = main.correct + extra.correct;
+
+  const mainBaselineAccuracy = (game.mainRange - game.mainCount) / game.mainRange;
+  const extraBaselineAccuracy = (game.extraRange - game.extraCount) / game.extraRange;
+  const overallBaselineAccuracy = overall.excluded
+    ? (main.excluded * mainBaselineAccuracy + extra.excluded * extraBaselineAccuracy) / overall.excluded
+    : 0;
+  const finish = (zone, baselineAccuracy, baselineZeroRate) => ({
+    ...zone,
+    accuracy: zone.excluded ? zone.correct / zone.excluded : 0,
+    zeroRate: done.length ? zone.zero / done.length : 0,
+    avgFalse: done.length ? zone.false / done.length : 0,
+    baselineAccuracy,
+    baselineZeroRate,
+  });
+
+  return {
+    total: records.length,
+    done: done.length,
+    pending: records.filter(r => r.status === 'pending').length,
+    unevaluable: records.filter(r => r.status === 'unevaluable').length,
+    legacy: records.filter(r => r.snapshotSource === 'legacy-kept-complement').length,
+    main: finish(main, mainBaselineAccuracy, done.length ? mainBaselineZero / done.length : 0),
+    extra: finish(extra, extraBaselineAccuracy, done.length ? extraBaselineZero / done.length : 0),
+    overall: finish(overall, overallBaselineAccuracy, done.length ? overallBaselineZero / done.length : 0),
+    dist: [...dist.entries()].sort((a, b) => a[0] - b[0]),
+  };
+}

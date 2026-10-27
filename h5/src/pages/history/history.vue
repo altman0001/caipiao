@@ -3,41 +3,43 @@
     <TopBar />
 
     <PageBody>
-      <!-- 命中报表 -->
+      <!-- 排除效果报表 -->
       <view class="section fade-up">
         <view class="sec-head">
-          <text class="h2">预测结果 · 命中报表</text>
+          <text class="h2">预测结果 · 排除效果报表</text>
           <text class="badge">{{ stats.total }} 期记录</text>
         </view>
-        <text class="hint">自动刷新抓取最新开奖后重跑预测并保存保留号码，开奖后自动判定命中。</text>
+        <text class="hint">正式快照 {{ stats.total - stats.legacy }} 期 · 历史重建 {{ stats.legacy }} 期；正式快照须有可验证的开奖前生成时间才纳入评估，历史重建记录生成时间不可考证，结果仅供参考。</text>
 
         <view class="metrics">
           <view class="m-card">
             <text class="label">已开奖判定</text>
             <view class="value">{{ stats.done }}<small> / {{ stats.total }}</small></view>
-            <view class="dim">待开奖 {{ stats.pending }} 期</view>
+            <view class="dim">待开奖 {{ stats.pending }} 期<text v-if="stats.unevaluable"> · 无法评估 {{ stats.unevaluable }} 期</text></view>
           </view>
           <view class="m-card">
-            <text class="label">保留号命中率</text>
-            <view class="value">{{ Math.round(stats.hitRate * 100) }}<small>%</small></view>
-            <view class="dim">命中 {{ stats.hit }} / 已开奖 {{ stats.done }}</view>
+            <text class="label">单号排除准确率</text>
+            <view class="value">{{ (stats.overall.accuracy * 100).toFixed(1) }}<small>%</small></view>
+            <view class="dim">主号 {{ (stats.main.accuracy * 100).toFixed(1) }}% · {{ tag === 'dlt' ? '后区' : '蓝球' }} {{ (stats.extra.accuracy * 100).toFixed(1) }}%</view>
+            <view class="dim">随机基线 {{ (stats.overall.baselineAccuracy * 100).toFixed(1) }}%</view>
           </view>
           <view class="m-card">
-            <text class="label">平均命中</text>
-            <view class="value">{{ stats.done ? (stats.avgMain + stats.avgExtra).toFixed(2) : '—' }}<small> 个/期</small></view>
-            <view class="dim">主号 {{ stats.avgMain.toFixed(2) }} · {{ tag === 'dlt' ? '后区' : '蓝球' }} {{ stats.avgExtra.toFixed(2) }}</view>
+            <text class="label">整期零误排率</text>
+            <view class="value">{{ (stats.overall.zeroRate * 100).toFixed(1) }}<small>%</small></view>
+            <view class="dim">零误排 {{ stats.overall.zero }} / 已开奖 {{ stats.done }}</view>
+            <view class="dim">随机基线 {{ (stats.overall.baselineZeroRate * 100).toFixed(2) }}%</view>
           </view>
           <view class="m-card">
-            <text class="label">单期最佳</text>
-            <view class="value">{{ stats.best.t > 0 ? stats.best.t : '—' }}</view>
-            <view class="dim">{{ stats.best.issue || '尚无命中记录' }}</view>
+            <text class="label">平均误排</text>
+            <view class="value">{{ stats.done ? stats.overall.avgFalse.toFixed(2) : '—' }}<small> 个/期</small></view>
+            <view class="dim">主号 {{ stats.main.avgFalse.toFixed(2) }} · {{ tag === 'dlt' ? '后区' : '蓝球' }} {{ stats.extra.avgFalse.toFixed(2) }}</view>
           </view>
         </view>
 
         <view v-if="stats.done > 0" class="chips">
-          <text class="chips-label">命中分布：</text>
+          <text class="chips-label">误排分布：</text>
           <view v-for="([t, c], i) in stats.dist" :key="i" class="chip">
-            命中 {{ t }} 个 ×{{ c }}
+            误排 {{ t }} 个 ×{{ c }}
           </view>
         </view>
       </view>
@@ -72,7 +74,7 @@
         <view v-for="r in view" :key="r.issue" class="rec" :class="recCls(r)">
           <view class="rec-top">
             <text class="issue">{{ r.issue }}</text>
-            <text class="date">{{ drawByIssue.get(r.issue) || '—' }}</text>
+            <text class="date">{{ drawByIssue.get(r.issue) || r.actualDate || '—' }}</text>
             <uni-tag
               class="vt"
               :text="verdictText(r)"
@@ -80,23 +82,24 @@
               size="small"
             />
           </view>
+          <view class="dim source-line">{{ r.snapshotSource === 'generated' ? '来源：正式快照' : '来源：历史重建（生成时间不可考证）' }}</view>
 
           <view class="pair">
-            <text class="pair-label">保留号</text>
+            <text class="pair-label">排除号</text>
             <view class="balls">
               <Ball
-                v-for="(n, i) in r.keptMain"
-                :key="'km' + i"
+                v-for="(n, i) in r.excludedMain"
+                :key="'em' + i"
                 :num="n"
                 :color="tag === 'dlt' ? 'orange' : 'red'"
                 size="xs"
               />
               <text class="xsep" />
-              <Ball v-for="(n, i) in r.keptExtra" :key="'ke' + i" :num="n" color="blue" size="xs" />
+              <Ball v-for="(n, i) in r.excludedExtra" :key="'ee' + i" :num="n" color="blue" size="xs" />
             </view>
           </view>
 
-          <view class="pair" v-if="r.status !== 'pending'">
+          <view class="pair" v-if="r.actualMain && r.actualMain.length">
             <text class="pair-label">开奖号</text>
             <view class="balls">
               <Ball
@@ -104,7 +107,7 @@
                 :key="'am' + i"
                 :num="n"
                 :color="tag === 'dlt' ? 'orange' : 'red'"
-                :cand="isHit(r.hitMain, n)"
+                :cand="isHit(r.falseExcludedMain, n)"
                 size="xs"
               />
               <text class="xsep" />
@@ -113,18 +116,34 @@
                 :key="'ae' + i"
                 :num="n"
                 :color="'blue'"
-                :cand="isHit(r.hitExtra, n)"
+                :cand="isHit(r.falseExcludedExtra, n)"
                 size="xs"
               />
             </view>
           </view>
 
-          <view class="rec-stats" v-if="r.status !== 'pending'">
-            <text class="stat-chip">主号命中 <b>{{ r.hitMain ? r.hitMain.length : 0 }}</b></text>
-            <text class="stat-chip">{{ tag === 'dlt' ? '后区' : '蓝球' }}命中 <b>{{ r.hitExtra ? r.hitExtra.length : 0 }}</b></text>
+          <view class="pair" v-if="r.status === 'evaluated'">
+            <text class="pair-label">误排号</text>
+            <view class="balls" v-if="r.falseExcludedMain.length + r.falseExcludedExtra.length">
+              <Ball
+                v-for="(n, i) in r.falseExcludedMain"
+                :key="'fm' + i"
+                :num="n"
+                :color="tag === 'dlt' ? 'orange' : 'red'"
+                size="xs"
+              />
+              <text class="xsep" />
+              <Ball v-for="(n, i) in r.falseExcludedExtra" :key="'fe' + i" :num="n" color="blue" size="xs" />
+            </view>
+            <text v-else class="dim">无</text>
+          </view>
+
+          <view class="rec-stats" v-if="r.status === 'evaluated'">
+            <text class="stat-chip">主号误排 <b>{{ r.falseExcludedMain.length }}</b></text>
+            <text class="stat-chip">{{ tag === 'dlt' ? '后区' : '蓝球' }}误排 <b>{{ r.falseExcludedExtra.length }}</b></text>
           </view>
           <view class="rec-stats" v-else>
-            <text class="stat-chip dim-chip">待开奖，暂无判定</text>
+            <text class="stat-chip dim-chip">{{ r.status === 'pending' ? '待开奖，暂无判定' : r.unevaluableReason === 'snapshot-not-provably-pre-draw' ? '无法证明快照生成于开奖前，不纳入评估' : '无法评估，开奖数据缺失' }}</text>
           </view>
 
           <!-- 本期照片：拍照 / 上传 -->
@@ -156,7 +175,7 @@
       </view>
 
       <view class="disclaimer">
-        <text class="d-title">重要提示：</text>历史预测命中率仅用于检验统计方法，不构成对未来开奖的预测能力证明。开奖为随机独立事件，请理性看待。
+        <text class="d-title">重要提示：</text>历史排除表现仅用于检验统计方法，不构成对未来开奖的预测能力证明。随机基线按相同号码池、开奖数量和排除数量计算；开奖为随机独立事件，请理性看待。
       </view>
     </PageBody>
   </view>
@@ -169,8 +188,9 @@ import Ball from '../../components/Ball.vue';
 import { DATA } from '../../common/data.js';
 import { store } from '../../common/store.js';
 import { PRED_HISTORY } from '../../common/predHistory.js';
+import { summarizePredictionRecords } from '../../common/lib/analysis.js';
 
-const FILTERS = [['all', '全部'], ['done', '已开奖'], ['hit', '仅命中']];
+const FILTERS = [['all', '全部'], ['done', '已开奖'], ['zero', '仅零误排']];
 const LIMITS = [[20, '最近 20 期'], [50, '最近 50 期'], [0, '全部']];
 
 export default {
@@ -199,55 +219,29 @@ export default {
     tag() { return this.game.tag; },
     records() { return (PRED_HISTORY[this.tag] || []).slice().reverse(); },
     drawByIssue() { return new Map(this.game.draws.map((d) => [d.i, d.d])); },
-    stats() {
-      const records = this.records;
-      const done = records.filter((r) => r.status !== 'pending');
-      const hit = done.filter((r) => r.status === 'hit');
-      const totMain = done.reduce((s, r) => s + (r.hitMain ? r.hitMain.length : 0), 0);
-      const totExtra = done.reduce((s, r) => s + (r.hitExtra ? r.hitExtra.length : 0), 0);
-      const dist = new Map();
-      for (const r of done) {
-        const t = (r.hitMain ? r.hitMain.length : 0) + (r.hitExtra ? r.hitExtra.length : 0);
-        dist.set(t, (dist.get(t) || 0) + 1);
-      }
-      let best = { t: -1, issue: null };
-      for (const r of done) {
-        const t = (r.hitMain ? r.hitMain.length : 0) + (r.hitExtra ? r.hitExtra.length : 0);
-        if (t > best.t) best = { t, issue: r.issue };
-      }
-      return {
-        total: records.length,
-        done: done.length,
-        pending: records.length - done.length,
-        hit: hit.length,
-        hitRate: done.length ? hit.length / done.length : 0,
-        avgMain: done.length ? totMain / done.length : 0,
-        avgExtra: done.length ? totExtra / done.length : 0,
-        dist: [...dist.entries()].sort((a, b) => a[0] - b[0]),
-        best,
-      };
-    },
+    stats() { return summarizePredictionRecords(this.records, this.game); },
     view() {
       return this.records
-        .filter((r) => (this.filter === 'all' ? true : this.filter === 'done' ? r.status !== 'pending' : r.status === 'hit'))
+        .filter((r) => (this.filter === 'all' ? true : this.filter === 'done' ? r.status === 'evaluated' : r.zeroFalseExclusion))
         .slice(0, this.limit || undefined);
     },
   },
   methods: {
     verdictText(r) {
       if (r.status === 'pending') return '待开奖';
-      const t = (r.hitMain ? r.hitMain.length : 0) + (r.hitExtra ? r.hitExtra.length : 0);
-      return r.status === 'hit' ? `命中 ${t} 个` : '未命中';
+      if (r.status === 'unevaluable') return '无法评估';
+      if (r.zeroFalseExclusion) return '零误排';
+      const t = r.falseExcludedMain.length + r.falseExcludedExtra.length;
+      return `误排 ${t} 个`;
     },
     verdictStyle(r) {
-      if (r.status === 'pending') return 'background-color:var(--surface3);color:var(--muted);border:none';
-      if (r.status === 'hit') return 'background-color:var(--teal-soft);color:var(--teal-text);border:none';
+      if (r.status === 'pending' || r.status === 'unevaluable') return 'background-color:var(--surface3);color:var(--muted);border:none';
+      if (r.zeroFalseExclusion) return 'background-color:var(--teal-soft);color:var(--teal-text);border:none';
       return 'background-color:var(--red-bg);color:var(--brand);border:none';
     },
     recCls(r) {
-      if (r.status === 'hit') return 'hit';
-      if (r.status === 'miss') return 'miss';
-      return '';
+      if (r.status !== 'evaluated') return '';
+      return r.zeroFalseExclusion ? 'zero-false' : 'has-false';
     },
     isHit(hitArr, n) { return hitArr && hitArr.includes(n); },
 
@@ -404,6 +398,7 @@ export default {
   box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.06);
 }
 
+.source-line { margin-top: 8rpx; font-size: 20rpx; }
 .pair { display: flex; gap: 16rpx; margin-top: 14rpx; align-items: center; }
 .pair-label { font-size: 20rpx; color: var(--faint); flex: none; width: 74rpx; }
 .balls { display: flex; gap: 8rpx; flex-wrap: wrap; align-items: center; flex: 1; }
@@ -416,8 +411,8 @@ export default {
   margin: 0 4rpx;
 }
 
-.rec.hit { border-color: rgba(55, 224, 193, 0.45); }
-.rec.miss { border-color: rgba(255, 77, 109, 0.3); }
+.rec.zero-false { border-color: rgba(55, 224, 193, 0.45); }
+.rec.has-false { border-color: rgba(255, 77, 109, 0.3); }
 .dim-chip { color: var(--faint); background: var(--surface3); }
 
 /* 本期照片附件 */
