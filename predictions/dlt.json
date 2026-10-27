@@ -33,7 +33,7 @@
         12
       ],
       "status": "evaluated",
-      "evaluated": "2026-09-16",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -97,8 +97,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-14"
     },
     {
       "issue": "26106",
@@ -129,7 +129,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-16",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -195,8 +195,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-16"
     },
     {
       "issue": "26107",
@@ -227,7 +227,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-19",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -293,8 +293,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-19"
     },
     {
       "issue": "26108",
@@ -327,7 +327,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-21",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -392,8 +392,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-21"
     },
     {
       "issue": "26109",
@@ -424,7 +424,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-24",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -490,8 +490,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-23"
     },
     {
       "issue": "26110",
@@ -526,7 +526,7 @@
         9
       ],
       "status": "evaluated",
-      "evaluated": "2026-09-26",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -590,8 +590,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-26"
     },
     {
       "issue": "26111",
@@ -625,7 +625,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-28",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -689,8 +689,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-28"
     },
     {
       "issue": "26112",
@@ -723,7 +723,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-09-30",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -788,8 +788,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-09-30"
     },
     {
       "issue": "26113",
@@ -822,7 +822,7 @@
         10
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-05",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -887,8 +887,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-05"
     },
     {
       "issue": "26114",
@@ -921,7 +921,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-07",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -986,8 +986,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-07"
     },
     {
       "issue": "26115",
@@ -1020,7 +1020,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-10",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1085,8 +1085,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-10"
     },
     {
       "issue": "26116",
@@ -1117,7 +1117,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-12",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1183,8 +1183,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-12"
     },
     {
       "issue": "26117",
@@ -1218,7 +1218,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-14",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1282,8 +1282,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-14"
     },
     {
       "issue": "26118",
@@ -1316,7 +1316,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-17",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1381,8 +1381,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-17"
     },
     {
       "issue": "26119",
@@ -1417,7 +1417,7 @@
         7
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-19",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1481,8 +1481,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-19"
     },
     {
       "issue": "26120",
@@ -1513,7 +1513,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-21",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1579,8 +1579,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-21"
     },
     {
       "issue": "26121",
@@ -1614,7 +1614,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-24",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1678,8 +1678,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null,
-      "actualDate": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "actualDate": "2026-10-24"
     },
     {
       "issue": "26122",
@@ -1710,7 +1710,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-26",
+      "evaluated": "2026-10-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1718,7 +1718,7 @@
       "window": "all",
       "excludeRatio": null,
       "snapshotSource": "legacy-kept-complement",
-      "actualDate": null,
+      "actualDate": "2026-10-26",
       "excludedMain": [
         1,
         2,
@@ -1777,7 +1777,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null
+      "evaluatedAt": "2026-10-27T22:38:35.956Z"
     },
     {
       "issue": "26123",
