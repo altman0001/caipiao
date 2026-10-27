@@ -33,7 +33,7 @@
         12
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-16",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -97,7 +97,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-14"
     },
     {
@@ -129,7 +129,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-16",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -195,7 +195,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-16"
     },
     {
@@ -227,7 +227,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-19",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -293,7 +293,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-19"
     },
     {
@@ -327,7 +327,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-21",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -392,7 +392,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-21"
     },
     {
@@ -424,7 +424,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-24",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -490,7 +490,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-23"
     },
     {
@@ -526,7 +526,7 @@
         9
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-26",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -590,7 +590,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-26"
     },
     {
@@ -625,7 +625,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-28",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -689,7 +689,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-28"
     },
     {
@@ -723,7 +723,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-30",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -788,7 +788,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-30"
     },
     {
@@ -822,7 +822,7 @@
         10
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-05",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -887,7 +887,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-05"
     },
     {
@@ -921,7 +921,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-07",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -986,7 +986,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-07"
     },
     {
@@ -1020,7 +1020,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-10",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1085,7 +1085,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-10"
     },
     {
@@ -1117,7 +1117,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-12",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1183,7 +1183,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-12"
     },
     {
@@ -1218,7 +1218,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-14",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1282,7 +1282,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-14"
     },
     {
@@ -1316,7 +1316,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-17",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1381,7 +1381,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-17"
     },
     {
@@ -1417,7 +1417,7 @@
         7
       ],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-19",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1481,7 +1481,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-19"
     },
     {
@@ -1513,7 +1513,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-21",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1579,7 +1579,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-21"
     },
     {
@@ -1614,7 +1614,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-24",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1678,7 +1678,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-24"
     },
     {
@@ -1710,7 +1710,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-26",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1777,7 +1777,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.956Z"
+      "evaluatedAt": null
     },
     {
       "issue": "26123",

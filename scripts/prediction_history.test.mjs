@@ -191,6 +191,22 @@ test('相同开奖结果的重复评估保持幂等', async () => {
   assert.deepEqual(reconcilePredictionRecord(rec, { m: [2, 3], x: [2] }, '00004', later), rec);
 });
 
+test('补齐开奖日期时只回填 actualDate，不改变原有评估日期', async () => {
+  const { reconcilePredictionRecord } = await import('./prediction_history.mjs');
+  const rec = {
+    issue: '00003', status: 'evaluated', keptMain: [1, 3], keptExtra: [2],
+    excludedMain: [2, 4], excludedExtra: [1, 3], actualMain: [2, 3], actualExtra: [2],
+    hitMain: [3], hitExtra: [2], falseExcludedMain: [2], falseExcludedExtra: [],
+    mainZeroFalseExclusion: false, extraZeroFalseExclusion: true, zeroFalseExclusion: false,
+    evaluated: '2026-09-16', evaluatedAt: null, actualDate: null,
+  };
+  const filled = reconcilePredictionRecord(rec, { d: '2026-09-16', m: [2, 3], x: [2] }, '00004', NOW);
+  assert.equal(filled.actualDate, '2026-09-16');
+  assert.equal(filled.evaluated, '2026-09-16');
+  assert.equal(filled.evaluatedAt, null);
+  assert.equal(filled.status, 'evaluated');
+});
+
 test('开奖结果更正后重新计算命中和误排', async () => {
   const { reconcilePredictionRecord } = await import('./prediction_history.mjs');
   const rec = {

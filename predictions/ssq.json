@@ -29,7 +29,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-16",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -97,7 +97,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-15"
     },
     {
@@ -131,7 +131,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-17",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -198,7 +198,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-17"
     },
     {
@@ -233,7 +233,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-20",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -299,7 +299,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-20"
     },
     {
@@ -333,7 +333,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-22",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -400,7 +400,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-22"
     },
     {
@@ -435,7 +435,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-24",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -501,7 +501,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-24"
     },
     {
@@ -533,7 +533,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-27",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -601,7 +601,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-27"
     },
     {
@@ -633,7 +633,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-09-29",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -701,7 +701,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-09-29"
     },
     {
@@ -736,7 +736,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-06",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -802,7 +802,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-06"
     },
     {
@@ -834,7 +834,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-08",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -902,7 +902,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-08"
     },
     {
@@ -934,7 +934,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-11",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1002,7 +1002,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-11"
     },
     {
@@ -1034,7 +1034,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-13",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1102,7 +1102,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-13"
     },
     {
@@ -1136,7 +1136,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-15",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1203,7 +1203,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-15"
     },
     {
@@ -1235,7 +1235,7 @@
       "hitMain": [],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-18",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1303,7 +1303,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-18"
     },
     {
@@ -1337,7 +1337,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-20",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1404,7 +1404,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-20"
     },
     {
@@ -1438,7 +1438,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-22",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1505,7 +1505,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-22"
     },
     {
@@ -1539,7 +1539,7 @@
       ],
       "hitExtra": [],
       "status": "evaluated",
-      "evaluated": "2026-10-27",
+      "evaluated": "2026-10-25",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1606,7 +1606,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z",
+      "evaluatedAt": null,
       "actualDate": "2026-10-25"
     },
     {
@@ -1708,7 +1708,7 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": "2026-10-27T22:38:35.943Z"
+      "evaluatedAt": null
     },
     {
       "issue": "26124",

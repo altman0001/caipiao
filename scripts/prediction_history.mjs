@@ -135,9 +135,8 @@ export function reconcilePredictionRecord(rec, draw, nextIssue, now) {
     : null);
   if (resultDraw) {
     const actualDate = resultDraw.d ?? rec.actualDate ?? null;
-    const sameActual = sameNumbers(rec.actualMain, resultDraw.m)
-      && sameNumbers(rec.actualExtra, resultDraw.x)
-      && (resultDraw.d == null || rec.actualDate === actualDate);
+    const numbersSame = sameNumbers(rec.actualMain, resultDraw.m)
+      && sameNumbers(rec.actualExtra, resultDraw.x);
     const hasEvaluation = Array.isArray(rec.falseExcludedMain) && Array.isArray(rec.falseExcludedExtra)
       && typeof rec.zeroFalseExclusion === 'boolean';
     const provablyPreDraw = rec.snapshotSource !== 'generated' || (
@@ -168,7 +167,10 @@ export function reconcilePredictionRecord(rec, draw, nextIssue, now) {
       };
     }
 
-    if (rec.status === 'evaluated' && sameActual && hasEvaluation) return rec;
+    if (rec.status === 'evaluated' && hasEvaluation && numbersSame) {
+      // 结果未变：只补写缺失的开奖日期，保留原评估日期与评估时间
+      return (rec.actualDate ?? null) === actualDate ? rec : { ...rec, actualDate };
+    }
 
     const { unevaluableReason, ...withoutReason } = rec;
     return {
@@ -180,8 +182,8 @@ export function reconcilePredictionRecord(rec, draw, nextIssue, now) {
       hitExtra: rec.keptExtra.filter(n => resultDraw.x.includes(n)),
       ...evaluateExclusion(rec, resultDraw),
       status: 'evaluated',
-      evaluated: sameActual && rec.evaluated ? rec.evaluated : now.toISOString().slice(0, 10),
-      evaluatedAt: sameActual ? (rec.evaluatedAt ?? null) : now.toISOString(),
+      evaluated: numbersSame && rec.evaluated ? rec.evaluated : now.toISOString().slice(0, 10),
+      evaluatedAt: numbersSame ? (rec.evaluatedAt ?? null) : now.toISOString(),
     };
   }
 
