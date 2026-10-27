@@ -121,6 +121,18 @@ test('旧记录只重建可证明的补集信息，不虚构生成时间或算�
   assert.equal(rec.generated, '2026-10-25');
 });
 
+test('迁移时按保留集合重算补集，不沿用与保留集合不一致的排除集合', async () => {
+  const { migratePredictionRecord } = await import('./prediction_history.mjs');
+  const rec = migratePredictionRecord({
+    issue: '00002', generated: '2026-10-25', nDraws: 19,
+    keptMain: [1, 3], keptExtra: [2], actualMain: [2, 3], actualExtra: [2],
+    hitMain: [3], hitExtra: [2], status: 'hit', evaluated: '2026-10-26',
+    excludedMain: [3], excludedExtra: [2],
+  }, GAME);
+  assert.deepEqual(rec.excludedMain, [2, 4]);
+  assert.deepEqual(rec.excludedExtra, [1, 3]);
+});
+
 test('开奖评估只追加结果，不改变预测快照', async () => {
   const { createPredictionRecord, reconcilePredictionRecord } = await import('./prediction_history.mjs');
   const rec = createPredictionRecord({

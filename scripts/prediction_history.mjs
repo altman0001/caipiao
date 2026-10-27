@@ -113,8 +113,13 @@ export function migratePredictionRecord(rec, game) {
     excludeRatio: rec.excludeRatio ?? null,
     snapshotSource: rec.snapshotSource || 'legacy-kept-complement',
     actualDate: rec.actualDate ?? null,
-    excludedMain: rec.excludedMain || complementNumbers(game.mainRange, rec.keptMain),
-    excludedExtra: rec.excludedExtra || complementNumbers(game.extraRange, rec.keptExtra),
+    // 补集是派生数据，按保留集合重算，避免沿用与保留集合不一致的陈旧排除集合
+    excludedMain: rec.strategyId && rec.strategyId !== PREDICTION_STRATEGY
+      ? (rec.excludedMain || complementNumbers(game.mainRange, rec.keptMain))
+      : complementNumbers(game.mainRange, rec.keptMain),
+    excludedExtra: rec.strategyId && rec.strategyId !== PREDICTION_STRATEGY
+      ? (rec.excludedExtra || complementNumbers(game.extraRange, rec.keptExtra))
+      : complementNumbers(game.extraRange, rec.keptExtra),
   };
   if (migrated.status === 'hit' || migrated.status === 'miss') migrated.status = 'evaluated';
   return migrated;
