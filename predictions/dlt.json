@@ -1794,11 +1794,22 @@
         5,
         3
       ],
-      "actualMain": null,
-      "actualExtra": null,
-      "hitMain": null,
-      "hitExtra": null,
-      "status": "pending",
+      "actualMain": [
+        13,
+        18,
+        19,
+        20,
+        28
+      ],
+      "actualExtra": [
+        9,
+        11
+      ],
+      "hitMain": [
+        13
+      ],
+      "hitExtra": [],
+      "status": "evaluated",
       "generatedAt": null,
       "sourceLatestIssue": null,
       "strategyId": "likely-complement",
@@ -1850,7 +1861,100 @@
         11,
         12
       ],
-      "actualDate": null
+      "actualDate": "2026-10-28",
+      "falseExcludedMain": [
+        18,
+        19,
+        20,
+        28
+      ],
+      "falseExcludedExtra": [
+        9,
+        11
+      ],
+      "mainZeroFalseExclusion": false,
+      "extraZeroFalseExclusion": false,
+      "zeroFalseExclusion": false,
+      "evaluated": "2026-10-28",
+      "evaluatedAt": "2026-10-28T19:46:19.045Z"
+    },
+    {
+      "issue": "26124",
+      "generated": "2026-10-28",
+      "generatedAt": "2026-10-28T19:46:19.045Z",
+      "sourceLatestIssue": "26123",
+      "strategyId": "likely-complement",
+      "algorithmVersion": "predict-v1",
+      "window": "all",
+      "excludeRatio": null,
+      "snapshotSource": "generated",
+      "nDraws": 2941,
+      "keptMain": [
+        3,
+        5,
+        15,
+        17,
+        1
+      ],
+      "keptExtra": [
+        3,
+        1
+      ],
+      "excludedMain": [
+        2,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "excludedExtra": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "actualDate": null,
+      "actualMain": null,
+      "actualExtra": null,
+      "hitMain": null,
+      "hitExtra": null,
+      "falseExcludedMain": null,
+      "falseExcludedExtra": null,
+      "mainZeroFalseExclusion": null,
+      "extraZeroFalseExclusion": null,
+      "zeroFalseExclusion": null,
+      "status": "pending"
     }
   ],
   "schemaVersion": 2
