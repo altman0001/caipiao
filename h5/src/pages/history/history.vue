@@ -34,6 +34,11 @@
             <view class="value">{{ stats.done ? stats.overall.avgFalse.toFixed(2) : '—' }}<small> 个/期</small></view>
             <view class="dim">主号 {{ stats.main.avgFalse.toFixed(2) }} · {{ tag === 'dlt' ? '后区' : '蓝球' }} {{ stats.extra.avgFalse.toFixed(2) }}</view>
           </view>
+          <view class="m-card">
+            <text class="label">平均排除</text>
+            <view class="value">{{ stats.done ? stats.overall.avgExcluded.toFixed(1) : '—' }}<small> 个/期</small></view>
+            <view class="dim">主号 {{ stats.main.avgExcluded.toFixed(1) }} · {{ tag === 'dlt' ? '后区' : '蓝球' }} {{ stats.extra.avgExcluded.toFixed(1) }}</view>
+          </view>
         </view>
 
         <view v-if="stats.done > 0" class="chips">

@@ -7,12 +7,14 @@ const RD2 = '255,77,109'; // 红=高排除
 
 export default function PredictView({ game, win }) {
   const p = useMemo(()=>predict(game, win), [game, win]);
-  const [excludeRatio, setExcludeRatio] = useState(0.72);
+  const [excludeRatio, setExcludeRatio] = useState(null);
   const [sel, setSel] = useState(null); // 选中号码看理由
   const [tip, setTip] = useState(null); // 悬停浮层 {x,y,above,it}
   const tag = game.tag;
 
-  const mainExclCount = Math.round(game.mainRange * excludeRatio);
+  const budgetRatio = p.budget.main / game.mainRange;
+  const effectiveRatio = excludeRatio ?? budgetRatio;
+  const mainExclCount = Math.round(game.mainRange * effectiveRatio);
   const candSet = new Set(p.mainLikely.map(x=>x.n));
   const extraCand = new Set(p.extraLikely.map(x=>x.n));
 
@@ -50,6 +52,11 @@ export default function PredictView({ game, win }) {
               分数越高 = 按本策略越有把握认为它本期不会开出、建议排除；
               分数越低 = 相对更可能出现，需保留关注。
             </p>
+            <p style={{margin:'10px 0 0',lineHeight:1.8,color:'var(--muted)'}}>
+              <b style={{color:'var(--text)'}}>风险预算（v2）</b>：全量历史滚动回测显示，号码排序的实际开出率与随机基线一致，
+              真正可控的是排除数量。因此正式快照只保存预算内的排除号，使整期零误排概率不低于 50%；
+              划线滑杆仅用于自定义预览，不改变已保存的正式快照。
+            </p>
             <div className="pred-legend" style={{marginTop:14}}>
               <span><span className="flag" style={{background:lerpColor(GR2,RD2,0.05)}}/>可能出现（低排除）</span>
               <span><span className="flag" style={{background:lerpColor(GR2,RD2,0.9)}}/>建议排除（高置信）</span>
@@ -70,14 +77,14 @@ export default function PredictView({ game, win }) {
           <div className="metric"><div className="label">推荐保留(候选开出)</div>
             <div className="balls" style={{marginTop:8}}>{p.mainLikely.map(x=> <span key={x.n} className={'ball xs '+mainCls(x.n)+' cand'}>{pad(x.n)}</span>)}</div>
           </div>
-          <div className="metric"><div className="label">建议排除</div><div className="value" style={{fontSize:20}}>{game.mainRange-game.mainCount} <small>个</small></div>
-            <div className="dim" style={{fontSize:12}}>剩余号码按排除置信分排列</div></div>
+          <div className="metric"><div className="label">建议排除（正式保存）</div><div className="value" style={{fontSize:20}}>{p.budget.main} <small>个</small></div>
+            <div className="dim" style={{fontSize:12}}>风险预算：整期零误排概率 ≥ {Math.round(p.meta.excludeTarget*100)}%，当前约 {(p.budget.zeroFalseProbability*100).toFixed(1)}%</div></div>
         </div>
 
         <div className="sw-2">
-          <label className="sw">排除划线（按分数取最高的 {Math.round(excludeRatio*100)}%）：
-            <input type="range" min="45" max="90" value={Math.round(excludeRatio*100)} onChange={e=>setExcludeRatio(e.target.value/100)}/></label>
-          <span className="dim">{mainExclCount} 个标红排除</span>
+          <label className="sw">自定义排除划线（仅预览）：按分数取最高的 {Math.round(effectiveRatio*100)}%
+            <input type="range" min="5" max="90" value={Math.round(effectiveRatio*100)} onChange={e=>setExcludeRatio(e.target.value/100)}/></label>
+          <span className="dim">{mainExclCount} 个标红排除 · 正式快照只保存 {p.budget.main} 个</span>
         </div>
 
         <div className="heat" style={{gridTemplateColumns:'repeat(8,1fr)',marginTop:14}}>
@@ -131,15 +138,19 @@ export default function PredictView({ game, win }) {
         <div className="metrics" style={{gridTemplateColumns:'1fr 1fr'}}>
           <div className="metric"><div className="label">候选开出</div>
             <div className="balls" style={{marginTop:8}}>{p.extraLikely.map(x=> <span key={x.n} className={'ball xs blue cand'}>{pad(x.n)}</span>)}</div></div>
+          <div className="metric"><div className="label">建议排除（正式保存）</div>
+            <div className="value" style={{fontSize:20}}>{p.budget.extra} <small>个</small></div>
+            <div className="dim" style={{fontSize:12}}>与主号共用 {Math.round(p.meta.excludeTarget*100)}% 整期零误排预算</div></div>
         </div>
         <div className="heat" style={{gridTemplateColumns:'repeat(8,1fr)',marginTop:12}}>
-          {p.extraNot.map(it=> {
+          {p.extraNot.map((it,i)=> {
             const isCand = extraCand.has(it.n);
+            const isExcluded = i < p.budget.extra;
             return (
               <div key={it.n} className="cell" onClick={()=>setSel(it.n)}
                 onMouseEnter={e=>showTip(e,it)} onMouseLeave={()=>setTip(null)}
-                style={{background:isCand?'var(--surface3)':'var(--bg2)', color:isCand?'var(--blue-text)':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px var(--blue-strong)':'none', cursor:'pointer'}}>
-                <span>{pad(it.n)}</span><small>{isCand?'保留':'排除'}</small>
+                style={{background:isCand?'var(--surface3)':isExcluded?lerpColor(GR2,RD2,it.score/100):'var(--bg2)', color:isCand?'var(--blue-text)':'var(--muted)', boxShadow:isCand?'inset 0 0 0 2px var(--blue-strong)':'none', cursor:'pointer'}}>
+                <span>{pad(it.n)}</span><small>{isCand?'保留':isExcluded?'排除':'保留'}</small>
               </div>
             );
           })}

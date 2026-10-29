@@ -6,10 +6,10 @@ import { fileURLToPath } from 'node:url';
 import { DATA } from '../webapp/src/data.js';
 import { predict } from '../webapp/src/lib/predict.js';
 import {
-  PREDICTION_STRATEGY,
   loadHistory,
   saveHistory,
   writeTextAtomic,
+  needsNewSnapshot,
   createPredictionRecord,
   migratePredictionRecord,
   reconcilePredictionRecord,
@@ -44,8 +44,8 @@ function processGame(key) {
   // 已开奖的记录可幂等重算；未找到目标期开奖的旧预测保留并标记。
   hist.records = hist.records.map(rec => reconcilePredictionRecord(rec, drawOf.get(rec.issue), nextIssue, now));
 
-  // 同一目标期、同一正式策略只保存一份开奖前快照。
-  if (nextIssue && !hist.records.some(r => r.issue === nextIssue && r.strategyId === PREDICTION_STRATEGY)) {
+  // 同一目标期只保留一份正式快照，不因策略升级而为旧期补建
+  if (needsNewSnapshot(hist.records, nextIssue)) {
     const prediction = predict(game, 'all');
     hist.records.push(createPredictionRecord({
       issue: nextIssue,

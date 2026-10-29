@@ -49,6 +49,9 @@ export default function PredHistoryView({ game }) {
           <div className="metric"><div className="label">平均误排</div>
             <div className="value">{stats.done? stats.overall.avgFalse.toFixed(2):'—'}<small> 个/期</small></div>
             <div className="dim" style={{fontSize:12}}>主号 {stats.main.avgFalse.toFixed(2)} · {tag==='dlt'?'后区':'蓝球'} {stats.extra.avgFalse.toFixed(2)}</div></div>
+          <div className="metric"><div className="label">平均排除</div>
+            <div className="value">{stats.done? stats.overall.avgExcluded.toFixed(1):'—'}<small> 个/期</small></div>
+            <div className="dim" style={{fontSize:12}}>主号 {stats.main.avgExcluded.toFixed(1)} · {tag==='dlt'?'后区':'蓝球'} {stats.extra.avgExcluded.toFixed(1)}</div></div>
         </div>
 
         {stats.done>0 && (

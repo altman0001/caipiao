@@ -44,6 +44,11 @@
             每个号码得到一个 <text class="w">0–100 的「排除置信分」</text>（在各自号码池内归一化）：
             分数越高 = 越有把握认为本期不会开出、建议排除；分数越低 = 相对更可能出现，需保留关注。
           </view>
+          <view class="big-hint" style="margin:0">
+            <text class="w">风险预算（v2）</text>：全量历史滚动回测显示，号码排序的实际开出率与随机基线一致，
+            真正可控的是排除数量。因此正式快照只保存预算内的排除号，使整期零误排概率不低于 50%；
+            划线仅用于自定义预览，不改变已保存的正式快照。
+          </view>
           <view class="legend">
             <view class="lg-item">
               <view class="flag" :style="{ background: scoreColor(5) }" />
@@ -73,21 +78,21 @@
 
         <view class="cand-block">
           <text class="cand-label">
-            建议排除
-            <text class="cand-n">{{ game.mainRange - game.mainCount }} 个</text>
+            建议排除（正式保存）
+            <text class="cand-n">{{ p.budget.main }} 个</text>
           </text>
-          <text class="cand-desc">剩余号码按排除置信分排列</text>
+          <text class="cand-desc">风险预算：整期零误排概率 ≥ {{ Math.round(p.meta.excludeTarget * 100) }}%，当前约 {{ (p.budget.zeroFalseProbability * 100).toFixed(1) }}%</text>
         </view>
 
         <view class="slider-row">
-          <text class="sl-label">排除划线：按分数取最高的 {{ exclPct }}%</text>
-          <text class="sl-val">{{ mainExclCount }} 个标红</text>
+          <text class="sl-label">自定义划线（仅预览）：按分数取最高的 {{ effectivePct }}%</text>
+          <text class="sl-val">{{ mainExclCount }} 个标红 · 正式只存 {{ p.budget.main }} 个</text>
         </view>
         <uni-slider
-          :value="exclPct"
-          :min="45"
+          :value="effectivePct"
+          :min="5"
           :max="90"
-          :step="5"
+          :step="1"
           :active-color="'#ff6b81'"
           :background-color="'var(--surface3)'"
           :block-color="'#ff8aa0'"
@@ -129,22 +134,32 @@
         </view>
 
         <view class="cand-block">
-          <text class="cand-label">候选开出</text>
+          <text class="cand-label">
+            候选开出
+          </text>
           <view class="balls">
             <Ball v-for="x in p.extraLikely" :key="'e' + x.n" :num="x.n" color="blue" size="md" cand />
           </view>
         </view>
 
+        <view class="cand-block">
+          <text class="cand-label">
+            建议排除（正式保存）
+            <text class="cand-n">{{ p.budget.extra }} 个</text>
+          </text>
+          <text class="cand-desc">与主号共用 {{ Math.round(p.meta.excludeTarget * 100) }}% 整期零误排预算</text>
+        </view>
+
         <view class="heat" :style="{ gridTemplateColumns: 'repeat(8, 1fr)' }">
           <view
-            v-for="it in p.extraNot"
+            v-for="(it, i) in p.extraNot"
             :key="'gx' + it.n"
             class="cell"
-            :style="extraCellStyle(it)"
+            :style="extraCellStyle(it, i)"
             @click="open(it.n)"
           >
             <text>{{ pad2(it.n) }}</text>
-            <text class="cs">{{ extraCand.has(it.n) ? '保留' : '排除' }}</text>
+            <text class="cs">{{ extraCand.has(it.n) ? '保留' : (i < p.budget.extra ? '排除' : '保留') }}</text>
           </view>
         </view>
       </view>
@@ -203,7 +218,7 @@ export default {
   data() {
     return {
       store,
-      exclPct: 72,
+      exclPct: null,
       sel: null,
     };
   },
@@ -213,7 +228,13 @@ export default {
     winNum() { return store.win === 'all' ? this.game.draws.length : parseInt(store.win, 10); },
     p() { return predict(this.game, this.winNum); },
     mainBallColor() { return this.tag === 'dlt' ? 'orange' : 'red'; },
-    mainExclCount() { return Math.round(this.game.mainRange * (this.exclPct / 100)); },
+    mainExclCount() { return Math.round(this.game.mainRange * (this.effectivePct / 100)); },
+    effectivePct() {
+      // 默认划线正好落在风险预算的排除个数上
+      return this.exclPct != null
+        ? this.exclPct
+        : Math.round((this.p.budget.main / this.game.mainRange) * 100);
+    },
     candSet() { return new Set(this.p.mainLikely.map((x) => x.n)); },
     extraCand() { return new Set(this.p.extraLikely.map((x) => x.n)); },
     top15() {
@@ -248,7 +269,7 @@ export default {
         color: ex ? '#fff' : 'inherit',
       };
     },
-    extraCellStyle(it) {
+    extraCellStyle(it, i) {
       const isCand = this.extraCand.has(it.n);
       if (isCand) {
         return {
@@ -256,6 +277,9 @@ export default {
           color: 'var(--blue-text)',
           boxShadow: 'inset 0 0 0 2rpx var(--blue-strong)',
         };
+      }
+      if (i < this.p.budget.extra) {
+        return { background: lerpColor(GR2, RD2, it.score / 100), color: '#fff' };
       }
       return { background: 'var(--cell-bg)', color: 'var(--muted)' };
     },

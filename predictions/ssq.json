@@ -98,7 +98,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-15"
+      "actualDate": "2026-09-15",
+      "excludeTarget": null
     },
     {
       "issue": "26108",
@@ -199,7 +200,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-17"
+      "actualDate": "2026-09-17",
+      "excludeTarget": null
     },
     {
       "issue": "26109",
@@ -300,7 +302,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-20"
+      "actualDate": "2026-09-20",
+      "excludeTarget": null
     },
     {
       "issue": "26110",
@@ -401,7 +404,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-22"
+      "actualDate": "2026-09-22",
+      "excludeTarget": null
     },
     {
       "issue": "26111",
@@ -502,7 +506,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-24"
+      "actualDate": "2026-09-24",
+      "excludeTarget": null
     },
     {
       "issue": "26112",
@@ -602,7 +607,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-27"
+      "actualDate": "2026-09-27",
+      "excludeTarget": null
     },
     {
       "issue": "26113",
@@ -702,7 +708,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-09-29"
+      "actualDate": "2026-09-29",
+      "excludeTarget": null
     },
     {
       "issue": "26114",
@@ -803,7 +810,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-06"
+      "actualDate": "2026-10-06",
+      "excludeTarget": null
     },
     {
       "issue": "26115",
@@ -903,7 +911,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-08"
+      "actualDate": "2026-10-08",
+      "excludeTarget": null
     },
     {
       "issue": "26116",
@@ -1003,7 +1012,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-11"
+      "actualDate": "2026-10-11",
+      "excludeTarget": null
     },
     {
       "issue": "26117",
@@ -1103,7 +1113,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-13"
+      "actualDate": "2026-10-13",
+      "excludeTarget": null
     },
     {
       "issue": "26118",
@@ -1204,7 +1215,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-15"
+      "actualDate": "2026-10-15",
+      "excludeTarget": null
     },
     {
       "issue": "26119",
@@ -1304,7 +1316,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-18"
+      "actualDate": "2026-10-18",
+      "excludeTarget": null
     },
     {
       "issue": "26120",
@@ -1405,7 +1418,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-20"
+      "actualDate": "2026-10-20",
+      "excludeTarget": null
     },
     {
       "issue": "26121",
@@ -1506,7 +1520,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-22"
+      "actualDate": "2026-10-22",
+      "excludeTarget": null
     },
     {
       "issue": "26122",
@@ -1607,7 +1622,8 @@
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
       "evaluatedAt": null,
-      "actualDate": "2026-10-25"
+      "actualDate": "2026-10-25",
+      "excludeTarget": null
     },
     {
       "issue": "26123",
@@ -1708,7 +1724,8 @@
       "mainZeroFalseExclusion": false,
       "extraZeroFalseExclusion": false,
       "zeroFalseExclusion": false,
-      "evaluatedAt": null
+      "evaluatedAt": null,
+      "excludeTarget": null
     },
     {
       "issue": "26124",
@@ -1783,7 +1800,8 @@
         15,
         16
       ],
-      "actualDate": null
+      "actualDate": null,
+      "excludeTarget": null
     }
   ],
   "schemaVersion": 2

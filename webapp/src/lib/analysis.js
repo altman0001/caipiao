@@ -211,6 +211,7 @@ export function summarizePredictionRecords(records, game) {
     accuracy: zone.excluded ? zone.correct / zone.excluded : 0,
     zeroRate: done.length ? zone.zero / done.length : 0,
     avgFalse: done.length ? zone.false / done.length : 0,
+    avgExcluded: done.length ? zone.excluded / done.length : 0,
     baselineAccuracy,
     baselineZeroRate,
   });

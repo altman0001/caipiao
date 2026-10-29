@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import { complementNumbers, evaluateExclusion } from '../webapp/src/lib/analysis.js';
 
-export const PREDICTION_STRATEGY = 'likely-complement';
-export const PREDICTION_ALGORITHM_VERSION = 'predict-v1';
+export const PREDICTION_STRATEGY = 'risk-budget-exclude';
+export const PREDICTION_ALGORITHM_VERSION = 'predict-v2';
+const COMPLEMENT_STRATEGY = 'likely-complement';
 
 const RECORD_STATUSES = new Set(['pending', 'evaluated', 'unevaluable', 'hit', 'miss']);
 const OPTIONAL_NUMBER_ARRAYS = [
@@ -70,9 +71,15 @@ export function saveHistory(file, hist) {
   writeTextAtomic(file, JSON.stringify(hist, null, 2) + '\n');
 }
 
+export function needsNewSnapshot(records, nextIssue) {
+  return Boolean(nextIssue) && !records.some(r => r.issue === nextIssue);
+}
+
 export function createPredictionRecord({ issue, sourceLatestIssue, game, prediction, now }) {
-  const keptMain = prediction.mainLikely.map(x => x.n);
-  const keptExtra = prediction.extraLikely.map(x => x.n);
+  const excludedMain = [...prediction.excludedMain].sort((a, b) => a - b);
+  const excludedExtra = [...prediction.excludedExtra].sort((a, b) => a - b);
+  const keptMain = complementNumbers(game.mainRange, excludedMain);
+  const keptExtra = complementNumbers(game.extraRange, excludedExtra);
   return {
     issue,
     generated: now.toISOString().slice(0, 10),
@@ -82,12 +89,13 @@ export function createPredictionRecord({ issue, sourceLatestIssue, game, predict
     algorithmVersion: PREDICTION_ALGORITHM_VERSION,
     window: prediction.meta.win,
     excludeRatio: null,
+    excludeTarget: prediction.meta.excludeTarget ?? null,
     snapshotSource: 'generated',
     nDraws: prediction.meta.nDraws,
     keptMain,
     keptExtra,
-    excludedMain: complementNumbers(game.mainRange, keptMain),
-    excludedExtra: complementNumbers(game.extraRange, keptExtra),
+    excludedMain,
+    excludedExtra,
     actualDate: null,
     actualMain: null,
     actualExtra: null,
@@ -103,23 +111,27 @@ export function createPredictionRecord({ issue, sourceLatestIssue, game, predict
 }
 
 export function migratePredictionRecord(rec, game) {
+  // 旧记录未声明策略时按补集策略处理；补集策略的排除集合始终由保留集合重算
+  const strategyId = rec.strategyId || COMPLEMENT_STRATEGY;
+  const isComplement = strategyId === COMPLEMENT_STRATEGY;
   const migrated = {
     ...rec,
     generatedAt: rec.generatedAt ?? null,
     sourceLatestIssue: rec.sourceLatestIssue ?? null,
-    strategyId: rec.strategyId || PREDICTION_STRATEGY,
+    strategyId,
     algorithmVersion: rec.algorithmVersion || 'legacy-unknown',
     window: rec.window || 'all',
     excludeRatio: rec.excludeRatio ?? null,
+    excludeTarget: rec.excludeTarget ?? null,
     snapshotSource: rec.snapshotSource || 'legacy-kept-complement',
     actualDate: rec.actualDate ?? null,
-    // 补集是派生数据，按保留集合重算，避免沿用与保留集合不一致的陈旧排除集合
-    excludedMain: rec.strategyId && rec.strategyId !== PREDICTION_STRATEGY
-      ? (rec.excludedMain || complementNumbers(game.mainRange, rec.keptMain))
-      : complementNumbers(game.mainRange, rec.keptMain),
-    excludedExtra: rec.strategyId && rec.strategyId !== PREDICTION_STRATEGY
-      ? (rec.excludedExtra || complementNumbers(game.extraRange, rec.keptExtra))
-      : complementNumbers(game.extraRange, rec.keptExtra),
+    // 补集是派生数据，按保留集合重算；风险预算策略的排除集合是原始快照，须保留
+    excludedMain: isComplement
+      ? complementNumbers(game.mainRange, rec.keptMain)
+      : (rec.excludedMain || []),
+    excludedExtra: isComplement
+      ? complementNumbers(game.extraRange, rec.keptExtra)
+      : (rec.excludedExtra || []),
   };
   if (migrated.status === 'hit' || migrated.status === 'miss') migrated.status = 'evaluated';
   return migrated;

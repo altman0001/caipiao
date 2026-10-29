@@ -5,9 +5,29 @@ import os from 'node:os';
 import path from 'node:path';
 import * as pcAnalysis from '../webapp/src/lib/analysis.js';
 import * as h5Analysis from '../h5/src/common/lib/analysis.js';
+import * as pcPredict from '../webapp/src/lib/predict.js';
+import * as h5Predict from '../h5/src/common/lib/predict.js';
 
 const GAME = { mainRange: 4, mainCount: 2, extraRange: 3, extraCount: 1 };
 const NOW = new Date('2026-10-26T01:02:03.000Z');
+
+function makeGame({ mainRange, mainCount, extraRange, extraCount }, n = 80) {
+  const draws = [];
+  for (let t = 0; t < n; t++) {
+    const m = [];
+    for (let i = 0; i < mainCount; i++) m.push(((t + i * 3) % mainRange) + 1);
+    const x = [];
+    for (let i = 0; i < extraCount; i++) x.push(((t + i * 2) % extraRange) + 1);
+    draws.push({ i: String(t + 1).padStart(5, '0'), d: '2026-01-01', m, x });
+  }
+  return { name: 'test', mainRange, mainCount, extraRange, extraCount, draws };
+}
+
+function zeroFalseProbability(range, count, excluded) {
+  let p = 1;
+  for (let i = 0; i < count; i++) p *= (range - excluded - i) / (range - i);
+  return p;
+}
 
 for (const [name, analysis] of [['PC', pcAnalysis], ['H5', h5Analysis]]) {
   test(`${name} 计算保留集合的补集`, () => {
@@ -55,6 +75,9 @@ for (const [name, analysis] of [['PC', pcAnalysis], ['H5', h5Analysis]]) {
     assert.equal(stats.main.accuracy, 0.75);
     assert.equal(stats.main.zeroRate, 0.5);
     assert.equal(stats.main.avgFalse, 0.5);
+    assert.equal(stats.main.avgExcluded, 2);
+    assert.equal(stats.extra.avgFalse, 0.5);
+    assert.equal(stats.extra.avgExcluded, 1);
     assert.equal(stats.extra.accuracy, 0.5);
     assert.equal(stats.overall.excluded, 6);
     assert.equal(stats.overall.false, 2);
@@ -63,6 +86,7 @@ for (const [name, analysis] of [['PC', pcAnalysis], ['H5', h5Analysis]]) {
     assert.equal(stats.overall.zero, 0);
     assert.equal(stats.overall.zeroRate, 0);
     assert.equal(stats.overall.avgFalse, 1);
+    assert.equal(stats.overall.avgExcluded, 3);
     assert.deepEqual(stats.dist, [[1, 2]]);
     assert.equal(stats.main.baselineAccuracy, 0.5);
     assert.equal(stats.extra.baselineAccuracy, 2 / 3);
@@ -73,12 +97,48 @@ for (const [name, analysis] of [['PC', pcAnalysis], ['H5', h5Analysis]]) {
   });
 }
 
+for (const [name, predict] of [['PC', pcPredict.predict], ['H5', h5Predict.predict]]) {
+  test(`${name} 风险预算：SSQ 主号排 3 个、蓝球排 1 个，整期零误排概率不低于 50%`, () => {
+    const game = makeGame({ mainRange: 33, mainCount: 6, extraRange: 16, extraCount: 1 });
+    const p = predict(game, 'all');
+    assert.equal(p.meta.excludeTarget, 0.5);
+    assert.equal(p.budget.main, 3);
+    assert.equal(p.budget.extra, 1);
+    assert.equal(p.excludedMain.length, 3);
+    assert.equal(p.excludedExtra.length, 1);
+    assert.ok(p.budget.zeroFalseProbability >= 0.5);
+    assert.ok(zeroFalseProbability(33, 6, 4) * zeroFalseProbability(16, 1, 1) < 0.5);
+    assert.ok(zeroFalseProbability(33, 6, 3) * zeroFalseProbability(16, 1, 2) < 0.5);
+  });
+
+  test(`${name} 风险预算：DLT 主号排 3 个、后区排 1 个`, () => {
+    const game = makeGame({ mainRange: 35, mainCount: 5, extraRange: 12, extraCount: 2 });
+    const p = predict(game, 'all');
+    assert.equal(p.budget.main, 3);
+    assert.equal(p.budget.extra, 1);
+    assert.ok(p.budget.zeroFalseProbability >= 0.5);
+    assert.ok(zeroFalseProbability(35, 5, 4) * zeroFalseProbability(12, 2, 1) < 0.5);
+    assert.ok(zeroFalseProbability(35, 5, 3) * zeroFalseProbability(12, 2, 2) < 0.5);
+  });
+
+  test(`${name} 排除集合取排除置信最高的号码，保留集合为其余全部号码`, () => {
+    const game = makeGame({ mainRange: 33, mainCount: 6, extraRange: 16, extraCount: 1 });
+    const p = predict(game, 'all');
+    const topMain = p.mainNot.slice(0, p.budget.main).map(x => x.n).sort((a, b) => a - b);
+    assert.deepEqual(p.excludedMain, topMain);
+    assert.equal(p.keptMain.length, 30);
+    assert.deepEqual(p.keptMain, pcAnalysis.complementNumbers(33, p.excludedMain));
+    assert.deepEqual(p.keptExtra, pcAnalysis.complementNumbers(16, p.excludedExtra));
+  });
+}
+
 test('正式预测快照显式保存排除集合与生成依据', async () => {
   const { createPredictionRecord } = await import('./prediction_history.mjs');
   const rec = createPredictionRecord({
     issue: '00003', sourceLatestIssue: '00002', game: { ...GAME, mainRange: 5, mainCount: 2 },
     prediction: {
-      mainLikely: [{ n: 1 }, { n: 3 }], extraLikely: [{ n: 2 }], meta: { nDraws: 20, win: 'all' },
+      excludedMain: [2, 4, 5], excludedExtra: [1, 3],
+      meta: { nDraws: 20, win: 'all', excludeTarget: 0.5 },
     },
     now: NOW,
   });
@@ -86,10 +146,11 @@ test('正式预测快照显式保存排除集合与生成依据', async () => {
   assert.equal(rec.generated, '2026-10-26');
   assert.equal(rec.generatedAt, '2026-10-26T01:02:03.000Z');
   assert.equal(rec.sourceLatestIssue, '00002');
-  assert.equal(rec.strategyId, 'likely-complement');
-  assert.equal(rec.algorithmVersion, 'predict-v1');
+  assert.equal(rec.strategyId, 'risk-budget-exclude');
+  assert.equal(rec.algorithmVersion, 'predict-v2');
   assert.equal(rec.window, 'all');
   assert.equal(rec.excludeRatio, null);
+  assert.equal(rec.excludeTarget, 0.5);
   assert.equal(rec.snapshotSource, 'generated');
   assert.equal(rec.nDraws, 20);
   assert.deepEqual(rec.keptMain, [1, 3]);
@@ -133,12 +194,39 @@ test('迁移时按保留集合重算补集，不沿用与保留集合不一致�
   assert.deepEqual(rec.excludedExtra, [1, 3]);
 });
 
+test('已存在的目标期不再新建快照，即使策略不同', async () => {
+  const { needsNewSnapshot } = await import('./prediction_history.mjs');
+  const records = [{ issue: '26124', strategyId: 'likely-complement' }];
+  assert.equal(needsNewSnapshot(records, '26124'), false);
+  assert.equal(needsNewSnapshot(records, '26125'), true);
+  assert.equal(needsNewSnapshot(records, null), false);
+});
+
+test('风险预算策略的排除集合在迁移时保留，不扩成补集', async () => {
+  const { migratePredictionRecord } = await import('./prediction_history.mjs');
+  const rec = migratePredictionRecord({
+    issue: '00002', generated: '2026-10-25', nDraws: 19,
+    strategyId: 'risk-budget-exclude', algorithmVersion: 'predict-v2', excludeTarget: 0.5,
+    keptMain: [1, 3], keptExtra: [2], excludedMain: [2], excludedExtra: [3],
+    status: 'pending',
+  }, GAME);
+  assert.deepEqual(rec.excludedMain, [2]);
+  assert.deepEqual(rec.excludedExtra, [3]);
+  assert.deepEqual(rec.keptMain, [1, 3]);
+  assert.deepEqual(rec.keptExtra, [2]);
+  assert.equal(rec.strategyId, 'risk-budget-exclude');
+  assert.equal(rec.algorithmVersion, 'predict-v2');
+  assert.equal(rec.snapshotSource, 'legacy-kept-complement');
+  assert.equal(rec.status, 'pending');
+});
+
 test('开奖评估只追加结果，不改变预测快照', async () => {
   const { createPredictionRecord, reconcilePredictionRecord } = await import('./prediction_history.mjs');
   const rec = createPredictionRecord({
     issue: '00003', sourceLatestIssue: '00002', game: GAME,
     prediction: {
-      mainLikely: [{ n: 1 }, { n: 3 }], extraLikely: [{ n: 2 }], meta: { nDraws: 20, win: 'all' },
+      excludedMain: [2, 4], excludedExtra: [1, 3],
+      meta: { nDraws: 20, win: 'all', excludeTarget: 0.5 },
     },
     now: NOW,
   });
@@ -165,7 +253,8 @@ test('同日生成且无法证明开奖前生成的正式快照不得纳入评�
   const rec = createPredictionRecord({
     issue: '00003', sourceLatestIssue: '00002', game: GAME,
     prediction: {
-      mainLikely: [{ n: 1 }, { n: 3 }], extraLikely: [{ n: 2 }], meta: { nDraws: 20, win: 'all' },
+      excludedMain: [2, 4], excludedExtra: [1, 3],
+      meta: { nDraws: 20, win: 'all', excludeTarget: 0.5 },
     },
     now: NOW,
   });

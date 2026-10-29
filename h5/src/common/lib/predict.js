@@ -81,6 +81,43 @@ function rateNumber(n, opts) {
 
 function clamp(x, a, b) { return x < a ? a : x > b ? b : x }
 
+// 风险预算：整期（主号+副区）零误排概率的下限
+export const EXCLUDE_TARGET = 0.5;
+
+// 随机开奖下，排除 k 个号码而恰好全未开出的概率
+export function zeroFalseProbability(range, count, excluded) {
+  if (excluded > range - count) return 0;
+  let p = 1;
+  for (let i = 0; i < count; i++) p *= (range - excluded - i) / (range - i);
+  return p;
+}
+
+// 在给定预算下，该区最多可排除多少个号码
+function maxExcluded(range, count, target, scale = 1) {
+  let k = 0;
+  for (let cand = 1; cand <= range - count; cand++) {
+    if (scale * zeroFalseProbability(range, count, cand) >= target) k = cand;
+    else break;
+  }
+  return k;
+}
+
+// 分配两区的排除个数：主号优先用满预算；副区在剩余预算内尽量多排。
+// 若副区一个都排不了，则主号让出 1 个预算，前提是总排除数不减少。
+function allocateBudget(R, C, XR, XC, target) {
+  let kMain = maxExcluded(R, C, target);
+  let kExtra = maxExcluded(XR, XC, target, zeroFalseProbability(R, C, kMain));
+  if (kExtra === 0 && XR > XC && kMain > 1) {
+    const altMain = kMain - 1;
+    const altExtra = maxExcluded(XR, XC, target, zeroFalseProbability(R, C, altMain));
+    if (altExtra >= 1 && altMain + altExtra >= kMain) {
+      kMain = altMain;
+      kExtra = altExtra;
+    }
+  }
+  return { main: kMain, extra: kExtra };
+}
+
 export function predict(game, win, opts = {}) {
   const draws = winDraws(game, win);
   const nDraws = draws.length;
@@ -119,10 +156,31 @@ export function predict(game, win, opts = {}) {
   const mainLikely = [...candidates].sort((a, b) => b.pDraw - a.pDraw).slice(0, C);
   const extraLikely = [...extras].sort((a, b) => b.pDraw - a.pDraw).slice(0, XC);
 
+  // 风险预算：由两区总预算决定各自可排除的号码个数
+  const { main: kMain, extra: kExtra } = allocateBudget(R, C, XR, XC, EXCLUDE_TARGET);
+  const mainZero = zeroFalseProbability(R, C, kMain);
+  const excludedMain = mainNot.slice(0, kMain).map(x => x.n).sort((a, b) => a - b);
+  const excludedExtra = extraNot.slice(0, kExtra).map(x => x.n).sort((a, b) => a - b);
+  const keptMain = complementOf(R, excludedMain);
+  const keptExtra = complementOf(XR, excludedExtra);
+
   return {
     mainNot, extraNot, mainLikely, extraLikely,
-    meta: { game: game.name, win, nDraws },
+    excludedMain, excludedExtra, keptMain, keptExtra,
+    budget: {
+      main: kMain,
+      extra: kExtra,
+      zeroFalseProbability: mainZero * zeroFalseProbability(XR, XC, kExtra),
+    },
+    meta: { game: game.name, win, nDraws, excludeTarget: EXCLUDE_TARGET },
   };
+}
+
+function complementOf(range, excluded) {
+  const set = new Set(excluded);
+  const out = [];
+  for (let n = 1; n <= range; n++) if (!set.has(n)) out.push(n);
+  return out;
 }
 
 // 将 notProb 归一化为 0-100 的"排除置信分"，便于横向比较与划线
