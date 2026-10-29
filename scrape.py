@@ -20,7 +20,7 @@ def fetch(url, timeout=50, tries=5):
                 return txt
             print("  [retry] small/err resp, attempt",i,file=sys.stderr)
         except Exception as e:
-            print("  [retry] err",e,attempt,i,file=sys.stderr)
+            print("  [retry] err",e,"attempt",i,file=sys.stderr)
         time.sleep(6*(i+1))
     return ""
 
