@@ -1963,6 +1963,107 @@
         11,
         12
       ],
+      "actualDate": "2026-10-31",
+      "actualMain": [
+        12,
+        14,
+        18,
+        22,
+        27
+      ],
+      "actualExtra": [
+        1,
+        9
+      ],
+      "hitMain": [],
+      "hitExtra": [
+        1
+      ],
+      "falseExcludedMain": [
+        12,
+        14,
+        18,
+        22,
+        27
+      ],
+      "falseExcludedExtra": [
+        9
+      ],
+      "mainZeroFalseExclusion": false,
+      "extraZeroFalseExclusion": false,
+      "zeroFalseExclusion": false,
+      "status": "evaluated",
+      "excludeTarget": null,
+      "evaluated": "2026-10-31",
+      "evaluatedAt": "2026-10-31T18:42:22.359Z"
+    },
+    {
+      "issue": "26125",
+      "generated": "2026-10-31",
+      "generatedAt": "2026-10-31T18:42:22.359Z",
+      "sourceLatestIssue": "26124",
+      "strategyId": "risk-budget-exclude",
+      "algorithmVersion": "predict-v2",
+      "window": "all",
+      "excludeRatio": null,
+      "excludeTarget": 0.5,
+      "snapshotSource": "generated",
+      "nDraws": 2942,
+      "keptMain": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "keptExtra": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "excludedMain": [
+        16,
+        20,
+        26
+      ],
+      "excludedExtra": [
+        5
+      ],
       "actualDate": null,
       "actualMain": null,
       "actualExtra": null,
@@ -1973,8 +2074,7 @@
       "mainZeroFalseExclusion": null,
       "extraZeroFalseExclusion": null,
       "zeroFalseExclusion": null,
-      "status": "pending",
-      "excludeTarget": null
+      "status": "pending"
     }
   ],
   "schemaVersion": 2
