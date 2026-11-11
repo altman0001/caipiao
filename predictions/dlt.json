@@ -2460,6 +2460,105 @@
       "excludedExtra": [
         5
       ],
+      "actualDate": "2026-11-11",
+      "actualMain": [
+        2,
+        12,
+        14,
+        17,
+        33
+      ],
+      "actualExtra": [
+        7,
+        8
+      ],
+      "hitMain": [
+        2,
+        12,
+        14,
+        17,
+        33
+      ],
+      "hitExtra": [
+        7,
+        8
+      ],
+      "falseExcludedMain": [],
+      "falseExcludedExtra": [],
+      "mainZeroFalseExclusion": true,
+      "extraZeroFalseExclusion": true,
+      "zeroFalseExclusion": true,
+      "status": "evaluated",
+      "evaluated": "2026-11-11",
+      "evaluatedAt": "2026-11-11T21:30:05.615Z"
+    },
+    {
+      "issue": "26130",
+      "generated": "2026-11-11",
+      "generatedAt": "2026-11-11T21:30:05.615Z",
+      "sourceLatestIssue": "26129",
+      "strategyId": "risk-budget-exclude",
+      "algorithmVersion": "predict-v2",
+      "window": "all",
+      "excludeRatio": null,
+      "excludeTarget": 0.5,
+      "snapshotSource": "generated",
+      "nDraws": 2947,
+      "keptMain": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "keptExtra": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "excludedMain": [
+        4,
+        7,
+        9
+      ],
+      "excludedExtra": [
+        5
+      ],
       "actualDate": null,
       "actualMain": null,
       "actualExtra": null,
